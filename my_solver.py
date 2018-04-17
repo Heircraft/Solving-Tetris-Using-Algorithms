@@ -338,37 +338,30 @@ class AssemblyProblem_3(AssemblyProblem_1):
         # 
         actionsToTake = []
         if state is not None:
-            #print("Printing state!:")
-            #print(state[0])
-            #print("\n")
             
-            hold_state_parts = []
-            howManyParts = 0
+            '''
             for i in state:
                 make_object_part_rotate90 = TetrisPart(i) #make part
-                for j in list(range(0, 4)):
+                for _ in list(range(0, 4)):
                     make_object_part_rotate90.rotate90() #rotate
                     part_object = make_object_part_rotate90.get_frozen() #get tuple
-                    if appear_as_subpart(part_object, self.goal):
-                        hold_state_parts.append(part_object)
-
-            
+                    hold_state_parts.append(part_object)
+                                    '''
+            hold_state_parts = []
+            for part in state:
+                hold_state_parts.append(part)
+                actionsToTake.append((part, None, 0))
+                                    
             permutations_hold = itertools.permutations(hold_state_parts, 2)
 
             for part in permutations_hold:
-                howManyParts = howManyParts + 1
                 range_of_offset = offset_range(part[0], part[1])
                 range_offset = list(range(range_of_offset[0], range_of_offset[1]))
                 
                 for offset_number in range_offset:
-                    
-                    #if cost_rotated_subpart(part_object, self.finalGoal):
                     actionsToTake.append((part[0], part[1], offset_number))
-
-        #print(len(actionsToTake))
-        #exit
+                    
         return actionsToTake
-        # After results, if the action is already done, it will terminate
 
         
     def result(self, state, action):
@@ -379,23 +372,29 @@ class AssemblyProblem_3(AssemblyProblem_1):
 
         The action can be a drop or rotation.        
         """
-#        print("Printing initial state in results:")
-#        print(state)
-#        print("\n")
         
         pa, pu, offset = action
-        #print(action)
         state_to_make_canonical = []
+        final_state = ""
                 
-        make_object = TetrisPart(pa, part_under= pu, offset= offset)
-        returned_state = make_object.get_frozen()
+        if pu is not None:
+            make_object = TetrisPart(pa, part_under= pu, offset= offset)
+            returned_state = make_object.get_frozen()
+            
+        else:
+            make_object = TetrisPart(part_above = pa)
+            make_object.rotate90()
+            returned_state = make_object.get_frozen()
+            
         
         for index in state:
             if index != pa and index != pu:
+                print(index)
                 state_to_make_canonical.append(index)
         
         state_to_make_canonical.append(returned_state)
         final_state = make_state_canonical(state_to_make_canonical)
+
         return final_state
     
         """
@@ -510,9 +509,6 @@ class AssemblyProblem_4(AssemblyProblem_3):
         cost_rotations = cost_rotated_subpart(n.state, self.goal)
         return k_n - k_g + max(cost_rotations)
         
-        
-
-        raise NotImplementedError
 
 # ---------------------------------------------------------------------------
        
@@ -588,7 +584,7 @@ def solve_3(initial, goal):
     print('\n++  busy searching in solve_3() ...  ++\n')
     
     assembly_problem = AssemblyProblem_3(initial, goal)
-    solution_for_assemblyproblem_3 = generic_search.uniform_cost_search(assembly_problem)
+    solution_for_assemblyproblem_3 = generic_search.depth_first_graph_search(assembly_problem)
     if solution_for_assemblyproblem_3 == None:
         return 'no solution'
     else:

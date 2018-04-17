@@ -92,14 +92,15 @@ def test_solve_1():
     display_state(goal_state_no,'\nUnreachable goal state')
     
     La_no = solve_1(initial_state,goal_state_no)
+    print('\n\n')
 
     display_state(goal_state_yes,'\nReachable goal state')
     La_yes = solve_1(initial_state,goal_state_yes)
 #    print(La_yes)
     
     test_passed =  (#1  
-            #La_no == 'no solution'
-            #and 
+            La_no == 'no solution'
+            and 
             (#2
                     La_yes ==  [(((5, 5, 5),), ((1, 1, 3, 1, 0), (0, 1, 0, 1, 1)), 1), 
                         (((1, 1, 3, 1, 0), (0, 1, 0, 1, 1), (0, 5, 5, 5, 0)), ((1, 2),), -2)]
@@ -131,6 +132,7 @@ def test_solve_2():
     display_state(goal_state_no,'Goal state "no"')
     
     La_no = solve_2(initial_state,goal_state_no)
+    print('\n\n')
 
     display_state(goal_state_yes,'Goal state "yes"')
     La_yes = solve_2(initial_state,goal_state_yes)
@@ -161,17 +163,20 @@ def test_solve_3a():
 
     print('\n First test example \n')
     initial_state = load_state('workbenches/wb_06_i.txt')        
-    goal_state = load_state('workbenches/wb_01_i.txt')  
+    goal_state = load_state('workbenches/wb_01_i.txt')        
     
-        
     display_state(initial_state,'Initial state')
-    display_state(goal_state,'goal state')
+
+    goal_state = load_state('workbenches/wb_06_g.txt')        
+    display_state(goal_state,'\nGoal state')
     La = solve_3(initial_state, goal_state)
-    ok_2 = La=='no solution'
-    print(La)
-    test_passed = ok_2
     
-    return test_passed
+    print(La)
+#    ok_2 = La=='no solution'
+#    
+#    test_passed = ok_1 and ok_2
+#    
+#    return test_passed
 # ---------------------------------------------------------------------------
 
 def test_solve_3b():
@@ -264,7 +269,6 @@ def test_solve_rand_1():
     t1 = time.time()
     
     print ('Search solve_1 took {0} seconds'.format(t1-t0))
-    print(La)
 
 # ---------------------------------------------------------------------------
 
@@ -274,17 +278,11 @@ def test_solve_rand_2():
     
     '''
     initial_state = load_state('workbenches/wb_09_i.txt')        
-    ap_2 = AssemblyProblem_1(initial_state)
+    ap_2 = AssemblyProblem_2(initial_state)
     
     goal_state = gen_prob(ap_2, num_op=2)
     
-    print(initial_state)
-    print(goal_state)
-    
-    
     La = solve_2(initial_state, goal_state)
-    
-    print(La)
     
     
 # ---------------------------------------------------------------------------
@@ -311,7 +309,6 @@ def test_solve_1a():
     t1 = time.time()
     
     print ('Search solve_1 took {0} seconds'.format(t1-t0))
-    print(La)
     
 # ---------------------------------------------------------------------------
 
@@ -338,7 +335,6 @@ def test_solve_2a():
     t1 = time.time()
     
     print ('Search solve_2 took {0} seconds'.format(t1-t0))
-    print(La)
     
 
        
@@ -355,16 +351,15 @@ then it will not pass the test functions the markers will use.
 '''
         )
 
-#    print('"test_appear_as_subpart" has been passed ', test_appear_as_subpart())
+#    print('"test_appear_as_subpart" has been passed ', test_appear_as_subpart() )
     
 #    print('\n"test_solve_1" has been passed ', test_solve_1() )
 
-    #print('\n"test_solve_2" has been passed ', test_solve_2() )
+#    print('\n"test_solve_2" has been passed ', test_solve_2() )
 
-    #print('\ntest_solve_3a has been passed ', test_solve_3a() )
+    print('\ntest_solve_3a has been passed ', test_solve_3a() )
 
-    print('\ntest_solve_3b has been passed ', test_solve_3b() )
-    print("It's uptodate.........................")
+    #print('\ntest_solve_3b has been passed ', test_solve_3b() )
 
 #    test_solve_4()
 
@@ -373,9 +368,9 @@ then it will not pass the test functions the markers will use.
 
 
 
-    #test_solve_1a()
+#    test_solve_1a()
     
- #   test_solve_rand_1()
+#    test_solve_rand_1()
     #test_solve_2a()
-    #test_solve_rand_2()
+#    test_solve_rand_2()
     
