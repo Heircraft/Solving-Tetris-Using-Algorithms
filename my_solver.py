@@ -72,13 +72,40 @@ def appear_as_subpart(some_part, goal_part):
         fixedMin = 0
         fixedUpper = 0
         for part_of_goal in goal_part:
-            for goalPart in part_of_goal:
+            if isinstance(part_of_goal[0], int) == False:
+                for goalPart in part_of_goal:
+                   try: 
+                       minIndex = len(matrix_part[0])
+                       for maxIndex in list(range(minIndex, len(goalPart) + 1)):
+                           if got_correct < len(some_part):
+                               tick = 0
+                               if fixedMin == 0 and fixedUpper == 0:
+                                   for element, element2 in zip(some_part[got_correct], goalPart[maxIndex - minIndex : maxIndex]):
+                                       
+                                           if element == 0 or element == element2:
+                                               tick = tick + 1
+                                               if tick == minIndex:
+                                                   #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[maxIndex - minIndex : maxIndex]))
+                                                   fixedMin = maxIndex - minIndex
+                                                   fixedUpper = maxIndex
+                                                   got_correct = got_correct + 1                                 
+                                               
+                               else:
+                                   for element, element2 in zip(some_part[got_correct], goalPart[fixedMin : fixedUpper]):
+                                       if element == 0 or element == element2:
+                                           tick = tick + 1
+                                           if tick == minIndex:
+                                               #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[fixedMin : fixedUpper]))
+                                               got_correct = got_correct + 1
+                   except:
+                       got_correct = 0
+            else:
                minIndex = len(matrix_part[0])
-               for maxIndex in list(range(minIndex, len(goalPart) + 1)):
+               for maxIndex in list(range(minIndex, len(part_of_goal) + 1)):
                    if got_correct < len(some_part):
                        tick = 0
                        if fixedMin == 0 and fixedUpper == 0:
-                           for element, element2 in zip(some_part[got_correct], goalPart[maxIndex - minIndex : maxIndex]):
+                           for element, element2 in zip(some_part[got_correct], part_of_goal[maxIndex - minIndex : maxIndex]):
                                
                                    if element == 0 or element == element2:
                                        tick = tick + 1
@@ -89,15 +116,16 @@ def appear_as_subpart(some_part, goal_part):
                                            got_correct = got_correct + 1                                 
                                        
                        else:
-                           for element, element2 in zip(some_part[got_correct], goalPart[fixedMin : fixedUpper]):
+                           for element, element2 in zip(some_part[got_correct], part_of_goal[fixedMin : fixedUpper]):
                                if element == 0 or element == element2:
                                    tick = tick + 1
                                    if tick == minIndex:
                                        #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[fixedMin : fixedUpper]))
                                        got_correct = got_correct + 1
         
-    if got_correct >= len(some_part):
-        value_to_return = True
+    if some_part != None:
+        if got_correct >= len(some_part):
+            value_to_return = True
         
     return value_to_return
 
@@ -479,7 +507,7 @@ class AssemblyProblem_4(AssemblyProblem_3):
                     make_object_part = TetrisPart(part[0], part_under= part[1], offset= offset_number)
                     part_object = make_object_part.get_frozen()
                     
-                    if cost_rotated_subpart(part_object, self.finalGoal):
+                    if cost_rotated_subpart(part_object, self.goal):
                         actionsToTake.append((part[0], part[1], offset_number))
 
         return actionsToTake
@@ -503,11 +531,17 @@ class AssemblyProblem_4(AssemblyProblem_3):
           n : node of a search tree
           
         '''
+        finalReturn = 0
         cost_rotations = []
         k_n = len(n.state)
         k_g = len(self.goal)
         cost_rotations = cost_rotated_subpart(n.state, self.goal)
-        return k_n - k_g + max(cost_rotations)
+        if isinstance(cost_rotations, list):
+            finalReturn = k_n - k_g + max(cost_rotations)
+        else:
+            finalReturn = k_n - k_g + cost_rotations
+        
+        return finalReturn
         
 
 # ---------------------------------------------------------------------------

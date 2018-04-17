@@ -167,7 +167,7 @@ def test_solve_3a():
     
     display_state(initial_state,'Initial state')
 
-    goal_state = load_state('workbenches/wb_06_g.txt')        
+    #goal_state = load_state('workbenches/wb_06_g.txt')        
     display_state(goal_state,'\nGoal state')
     La = solve_3(initial_state, goal_state)
     
@@ -278,11 +278,13 @@ def test_solve_rand_2():
     
     '''
     initial_state = load_state('workbenches/wb_09_i.txt')        
-    ap_2 = AssemblyProblem_2(initial_state)
+    ap_2 = AssemblyProblem_1(initial_state)
     
     goal_state = gen_prob(ap_2, num_op=2)
     
     La = solve_2(initial_state, goal_state)
+    
+    print(La)
     
     
 # ---------------------------------------------------------------------------
@@ -351,13 +353,13 @@ then it will not pass the test functions the markers will use.
 '''
         )
 
-#    print('"test_appear_as_subpart" has been passed ', test_appear_as_subpart() )
+    #print('"test_appear_as_subpart" has been passed ', test_appear_as_subpart() )
     
-#    print('\n"test_solve_1" has been passed ', test_solve_1() )
+    #print('\n"test_solve_1" has been passed ', test_solve_1() )
 
-#    print('\n"test_solve_2" has been passed ', test_solve_2() )
+    #print('\n"test_solve_2" has been passed ', test_solve_2() )
 
-    print('\ntest_solve_3a has been passed ', test_solve_3a() )
+    #print('\ntest_solve_3a has been passed ', test_solve_3a() )
 
     #print('\ntest_solve_3b has been passed ', test_solve_3b() )
 
@@ -368,9 +370,9 @@ then it will not pass the test functions the markers will use.
 
 
 
-#    test_solve_1a()
+    #test_solve_1a()
     
-#    test_solve_rand_1()
+    #test_solve_rand_1()
     #test_solve_2a()
-#    test_solve_rand_2()
+    #test_solve_rand_2()
     
