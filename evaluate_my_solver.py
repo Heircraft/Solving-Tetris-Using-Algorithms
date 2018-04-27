@@ -363,7 +363,7 @@ then it will not pass the test functions the markers will use.
     #print('\ntest_solve_3a has been passed ', test_solve_3a() )
 
     #print('\ntest_solve_3b has been passed ', test_solve_3b() )
-    print(test_solve_4())
+    #print(test_solve_4())
 
 #    test_solve_4()
 

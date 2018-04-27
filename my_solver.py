@@ -85,7 +85,6 @@ def appear_as_subpart(some_part, goal_part):
                                            if element == 0 or element == element2:
                                                tick = tick + 1
                                                if tick == minIndex:
-                                                   #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[maxIndex - minIndex : maxIndex]))
                                                    fixedMin = maxIndex - minIndex
                                                    fixedUpper = maxIndex
                                                    got_correct = got_correct + 1                                 
@@ -95,7 +94,6 @@ def appear_as_subpart(some_part, goal_part):
                                        if element == 0 or element == element2:
                                            tick = tick + 1
                                            if tick == minIndex:
-                                               #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[fixedMin : fixedUpper]))
                                                got_correct = got_correct + 1
                    except:
                        got_correct = 0
@@ -110,7 +108,6 @@ def appear_as_subpart(some_part, goal_part):
                                    if element == 0 or element == element2:
                                        tick = tick + 1
                                        if tick == minIndex:
-                                           #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[maxIndex - minIndex : maxIndex]))
                                            fixedMin = maxIndex - minIndex
                                            fixedUpper = maxIndex
                                            got_correct = got_correct + 1                                 
@@ -120,7 +117,6 @@ def appear_as_subpart(some_part, goal_part):
                                if element == 0 or element == element2:
                                    tick = tick + 1
                                    if tick == minIndex:
-                                       #print(str(some_part[got_correct]) + " is equal to " + str(goalPart[fixedMin : fixedUpper]))
                                        got_correct = got_correct + 1
         
     if some_part != None:
