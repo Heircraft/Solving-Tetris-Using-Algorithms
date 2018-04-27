@@ -250,14 +250,15 @@ class AssemblyProblem_1(AssemblyProblem):
         
         make_object = TetrisPart(pa, part_under= pu, offset= offset)
         returned_state = make_object.get_frozen()
-        
+
         for index in state:
             if index != pa and index != pu:
                 state_to_make_canonical.append(index)
-        
+                
+                
+        print(state_to_make_canonical)
         state_to_make_canonical.append(returned_state)
         final_state = make_state_canonical(state_to_make_canonical)
-        
         return final_state
         
 
@@ -367,14 +368,6 @@ class AssemblyProblem_3(AssemblyProblem_1):
         actionsToTake = []
         if state is not None:
             
-            '''
-            for i in state:
-                make_object_part_rotate90 = TetrisPart(i) #make part
-                for _ in list(range(0, 4)):
-                    make_object_part_rotate90.rotate90() #rotate
-                    part_object = make_object_part_rotate90.get_frozen() #get tuple
-                    hold_state_parts.append(part_object)
-                                    '''
             hold_state_parts = []
             for part in state:
                 hold_state_parts.append(part)
@@ -387,8 +380,10 @@ class AssemblyProblem_3(AssemblyProblem_1):
                 range_offset = list(range(range_of_offset[0], range_of_offset[1]))
                 
                 for offset_number in range_offset:
+                    
                     actionsToTake.append((part[0], part[1], offset_number))
                     
+        
         return actionsToTake
 
         
@@ -400,44 +395,28 @@ class AssemblyProblem_3(AssemblyProblem_1):
 
         The action can be a drop or rotation.        
         """
-        
+        #print("---------------------------------")
         pa, pu, offset = action
-        state_to_make_canonical = []
+        state_to_make_canonical = list(state)
         final_state = ""
-                
-        if pu is not None:
-            make_object = TetrisPart(pa, part_under= pu, offset= offset)
-            returned_state = make_object.get_frozen()
-            
-        else:
-            make_object = TetrisPart(part_above = pa)
-            make_object.rotate90()
-            returned_state = make_object.get_frozen()
-            
         
-        for index in state:
-            if index != pa and index != pu:
-                print(index)
-                state_to_make_canonical.append(index)
+        
+        if pu is not None:
+            make_object = TetrisPart(pa, pu, offset) # Make new part with pa and pu
+            returned_state = make_object.get_frozen() # get tuple
+            state_to_make_canonical.remove(pa)
+            state_to_make_canonical.remove(pu)
+        else:
+            make_object = TetrisPart(pa) # ???
+            make_object.rotate90()
+            returned_state = make_object.get_frozen()    
+            state_to_make_canonical.remove(pa)
         
         state_to_make_canonical.append(returned_state)
         final_state = make_state_canonical(state_to_make_canonical)
 
+
         return final_state
-    
-        """
-        make_object = TetrisPart(pa, part_under= pu, offset= offset)
-        returned_state = make_object.get_frozen()
-        
-        for index in state:
-            if index != pa and index != pu:
-                state_to_make_canonical.append(index)
-                
-        state_to_make_canonical.append(returned_state)
-        final_state = make_state_canonical(state_to_make_canonical)
-        return final_state
-        """
-        #raise NotImplementedError
 
 
 # ---------------------------------------------------------------------------
@@ -482,34 +461,25 @@ class AssemblyProblem_4(AssemblyProblem_3):
         actionsToTake = []
         if state is not None:
             
-            
             hold_state_parts = []
-            """
-            for t in state:
-                hold_state_parts.append(t)
-                #print(t)
-            """
-                
-            for i in state:
-                for j in list(range(0, 4)):
-                    make_object_part_rotate90 = TetrisPart(i) #make part
-                    make_object_part_rotate90.rotate90() #rotate
-                    part_object = make_object_part_rotate90.get_frozen() #get tuple
-                    if appear_as_subpart(part_object, self.goal):
-                        hold_state_parts.append(part_object)
-            
-            
+            for part in state:
+                hold_state_parts.append(part)
+                actionsToTake.append((part, None, 0))
+                                    
             permutations_hold = itertools.permutations(hold_state_parts, 2)
+
             for part in permutations_hold:
                 range_of_offset = offset_range(part[0], part[1])
                 range_offset = list(range(range_of_offset[0], range_of_offset[1]))
+                
                 for offset_number in range_offset:
                     make_object_part = TetrisPart(part[0], part_under= part[1], offset= offset_number)
                     part_object = make_object_part.get_frozen()
                     
-                    if cost_rotated_subpart(part_object, self.goal):
+                    if cost_rotated_subpart(part_object, self.goal) != np.inf:
                         actionsToTake.append((part[0], part[1], offset_number))
-
+                                            
+        
         return actionsToTake
         
         
