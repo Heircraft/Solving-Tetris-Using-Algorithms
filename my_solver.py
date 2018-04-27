@@ -155,7 +155,8 @@ def cost_rotated_subpart(some_part, goal_part):
     make_object_part = TetrisPart(some_part)
     
     for rot in list(range(0,4)): 
-        matrix_part_rotated = make_object_part.rotate90()
+        make_object_part.rotate90()
+        matrix_part_rotated = make_object_part.get_frozen()
         if appear_as_subpart(matrix_part_rotated, goal_part):
             appear_rotate.append(rot)
            
@@ -477,6 +478,7 @@ class AssemblyProblem_4(AssemblyProblem_3):
                     part_object = make_object_part.get_frozen()
                     
                     if cost_rotated_subpart(part_object, self.goal) != np.inf:
+                        print("sup")
                         actionsToTake.append((part[0], part[1], offset_number))
                                             
         
