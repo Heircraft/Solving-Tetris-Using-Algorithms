@@ -151,19 +151,16 @@ def cost_rotated_subpart(some_part, goal_part):
     
     '''
     
-    appear_rotate = []
     make_object_part = TetrisPart(some_part)
-    
-    for rot in list(range(0,4)): 
+    print(make_object_part.get_frozen())
+    for rot in list(range(1,5)): 
         make_object_part.rotate90()
         matrix_part_rotated = make_object_part.get_frozen()
         if appear_as_subpart(matrix_part_rotated, goal_part):
-            appear_rotate.append(rot)
+            return rot
            
-    if appear_rotate == []:
-        return np.inf
-    else:
-        return appear_rotate
+
+    return np.inf
 
     
     """
@@ -476,9 +473,8 @@ class AssemblyProblem_4(AssemblyProblem_3):
                 for offset_number in range_offset:
                     make_object_part = TetrisPart(part[0], part_under= part[1], offset= offset_number)
                     part_object = make_object_part.get_frozen()
-                    
+                    print("sup")
                     if cost_rotated_subpart(part_object, self.goal) != np.inf:
-                        print("sup")
                         actionsToTake.append((part[0], part[1], offset_number))
                                             
         
@@ -507,7 +503,9 @@ class AssemblyProblem_4(AssemblyProblem_3):
         cost_rotations = []
         k_n = len(n.state)
         k_g = len(self.goal)
-        cost_rotations = cost_rotated_subpart(n.state, self.goal)
+        print(n.state)
+        for index in n.state:
+            cost_rotations.append(cost_rotated_subpart(index, self.goal))
         if isinstance(cost_rotations, list):
             finalReturn = k_n - k_g + max(cost_rotations)
         else:
