@@ -606,10 +606,10 @@ class AssemblyProblem_4(AssemblyProblem_3):
             cost_rotations.append(cost_rotated_subpart(index, self.goal))
             
         # ALEX COMMENT THIS.
-        if isinstance(cost_rotations, list):
+#        if isinstance(cost_rotations, list):
             finalReturn = k_n - k_g + max(cost_rotations)
-        else:
-            finalReturn = k_n - k_g + cost_rotations
+#        else:
+#            finalReturn = k_n - k_g + cost_rotations
         
         return finalReturn
         
