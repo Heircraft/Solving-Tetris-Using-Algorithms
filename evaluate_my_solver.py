@@ -93,10 +93,15 @@ def test_solve_1():
     
     La_no = solve_1(initial_state,goal_state_no)
     print('\n\n')
-
+    
+    t0 = time.time()
+    
     display_state(goal_state_yes,'\nReachable goal state')
     La_yes = solve_1(initial_state,goal_state_yes)
 #    print(La_yes)
+    t1 = time.time()
+    
+    print ('Search solve_1 took {0} seconds'.format(t1-t0))
     
     test_passed =  (#1  
             La_no == 'no solution'
@@ -135,7 +140,10 @@ def test_solve_2():
     print('\n\n')
 
     display_state(goal_state_yes,'Goal state "yes"')
+    t0 = time.time()
     La_yes = solve_2(initial_state,goal_state_yes)
+    t1 = time.time()
+    print ('Search solve_1 took {0} seconds'.format(t1-t0))
 #    print(La_yes)
     
     test_passed =  (#1  
@@ -190,9 +198,10 @@ def test_solve_3b():
     
     display_state(initial_state,'Initial state')
     display_state(goal_state,'\nGoal state')
-    
+    t0 = time.time()
     La = solve_3(initial_state,goal_state)    
-    
+    t1 = time.time()
+    print ('Search solve_1 took {0} seconds'.format(t1-t0))
     print(La)
 
     
@@ -211,9 +220,10 @@ def test_solve_4():
     
     display_state(initial_state,'Initial state')
     display_state(goal_state,'\nGoal state')
-    
+    t0 = time.time()
     La = solve_4(initial_state,goal_state)    
-    
+    t1 = time.time()
+    print ('Search solve_1 took {0} seconds'.format(t1-t0))
     print('\n\n This problem is solvable \n')
     print(La)
     
@@ -270,6 +280,16 @@ def test_solve_rand_1():
     t1 = time.time()
     
     print ('Search solve_1 took {0} seconds'.format(t1-t0))
+#    sum = 0
+#    for i in range(0,5):
+#        t0 = time.time()
+#        La = solve_1(initial_state, goal_state)
+#        t1 = time.time()
+#        sum = sum + (t1-t0)
+#        print(sum)
+#    
+#    
+#    print ('Search solve_2 took {0} seconds'.format(sum/5))
 
 # ---------------------------------------------------------------------------
 
@@ -282,9 +302,22 @@ def test_solve_rand_2():
     ap_2 = AssemblyProblem_1(initial_state)
     
     goal_state = gen_prob(ap_2, num_op=2)
-    
+    t0 = time.time()
     La = solve_2(initial_state, goal_state)
+    t1 = time.time()
     
+#    sum = 0
+#    for i in range(0,5):
+#        t0 = time.time()
+#        La = solve_2(initial_state, goal_state)
+#        t1 = time.time()
+#        sum = sum + (t1-t0)
+#        print(sum)
+#    
+#    
+#    print ('Search solve_2 took {0} seconds'.format(sum/5))
+    
+    print ('Search solve_rand2 took {0} seconds'.format(t1-t0))
     print(La)
     
     
@@ -330,14 +363,16 @@ def test_solve_2a():
 
     goal_state  = load_state('workbenches/wb_09_g1.txt')
     
+    sum = 0
+    for i in range(0,5):
+        t0 = time.time()
+        La = solve_2(initial_state, goal_state)
+        t1 = time.time()
+        sum = sum + (t1-t0)
+        print(sum)
     
-    t0 = time.time()
     
-    La = solve_2(initial_state, goal_state)
-    
-    t1 = time.time()
-    
-    print ('Search solve_2 took {0} seconds'.format(t1-t0))
+    print ('Search solve_2 took {0} seconds'.format(sum/5))
     
 
        
@@ -360,10 +395,10 @@ then it will not pass the test functions the markers will use.
 
     #print('\n"test_solve_2" has been passed ', test_solve_2() )
 
-#    print('\ntest_solve_3a has been passed ', test_solve_3a() )
+    #print('\ntest_solve_3a has been passed ', test_solve_3a() )
 
     #print('\ntest_solve_3b has been passed ', test_solve_3b() )
-    print(test_solve_4())
+    #print(test_solve_4())
 
 #    test_solve_4()
 
@@ -374,7 +409,7 @@ then it will not pass the test functions the markers will use.
 
     #test_solve_1a()
     
-    #test_solve_rand_1()
+    test_solve_rand_1()
     #test_solve_2a()
     #test_solve_rand_2()
     
