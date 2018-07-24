@@ -605,11 +605,13 @@ class AssemblyProblem_4(AssemblyProblem_3):
             # in cost_rotation array. 
             cost_rotations.append(cost_rotated_subpart(index, self.goal))
             
-        # ALEX COMMENT THIS.
-#        if isinstance(cost_rotations, list):
+        # If more than one cost_rotation value (check if cost_rotation variable is a list), 
+        # then find maximum cost_rotation value, 
+        # else, use given cost_rotation value. 
+        if isinstance(cost_rotations, list):
             finalReturn = k_n - k_g + max(cost_rotations)
-#        else:
-#            finalReturn = k_n - k_g + cost_rotations
+        else:
+            finalReturn = k_n - k_g + cost_rotations
         
         return finalReturn
         
@@ -632,7 +634,7 @@ def solve_1(initial, goal):
     '''
 
     print('\n++  busy searching in solve_1() ...  ++\n')
-    
+    # dep_fir_graph
     assembly_problem = AssemblyProblem_1(initial, goal) # HINT
     solution_for_assemblyproblem_1 = generic_search.depth_first_graph_search(assembly_problem)
     
